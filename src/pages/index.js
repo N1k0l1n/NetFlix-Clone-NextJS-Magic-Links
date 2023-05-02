@@ -4,27 +4,68 @@ import Head from "next/head";
 import Banner from "../../components/banner/banner"
 import Navbar from "../../components/nav/navbar";
 import Card from "../../components/card/card";
+import SectionCards from "../../components/card/section-cards"
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+// export async function getServerSideProps(context) {
+
+  // const disneyVideos = await getVideos("disney trailer");
+  // const productivityVideos = await getVideos("Productivity");
+
+  // const travelVideos = await getVideos("indie music");
+
+  // const popularVideos = await getPopularVideos();
+//   return {
+//     props: {
+//       disneyVideos,
+//       travelVideos,
+//       productivityVideos,
+//       popularVideos,
+//       watchItAgainVideos,
+//     },
+//   };
+// }
+
+export default function Home({
+  disneyVideos,
+  travelVideos,
+  productivityVideos,
+  popularVideos,
+  watchItAgainVideos,
+}) {
   return (
     <div className={styles.container}>
       <Head>
         <title>Netflix</title>
+        <link rel="icon" href="/favicon.ico" />
       </Head>
-      
-      <Navbar username="user@23"/>
-      <Banner 
-      title="Spiderman: No Way Home"
-      subTitle="A bad movie"
-      imgUrl="/static/spiderman.jpg"
-      />
 
-      <Card imgUrl="/static/spiderman.jpg" size="large"/>
-      <Card imgUrl="/static/spiderman.jpg" size="medium"/>
-      <Card imgUrl="/static/spiderman.jpg" size="small"/>
+      <div className={styles.main}>
+        <Navbar username="user23@new.com" />
+        <Banner
+          videoId="4zH5iYM4wJo"
+          title="Spiderman No Way Home"
+          subTitle="a bad movie"
+          imgUrl="/static/spiderman.jpg"
+        />
 
+        <div className={styles.sectionWrapper}>
+          <SectionCards title="Disney"  imgUrl="/static/spiderman.jpg" size="large" />
+          <SectionCards
+            title="Watch it again"
+            imgUrl="/static/spiderman.jpg"
+            size="small"
+          />
+          <SectionCards title="Travel"  imgUrl="/static/spiderman.jpg" size="small" />
+          <SectionCards
+            title="Productivity"
+            imgUrl="/static/spiderman.jpg"
+            size="medium"
+          />
+          <SectionCards title="Popular"  imgUrl="/static/spiderman.jpg" size="small" />
+        </div>
+      </div>
     </div>
   );
 }
