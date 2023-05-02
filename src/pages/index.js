@@ -1,7 +1,8 @@
 import { Inter } from "next/font/google";
 import styles from "../styles/Home.module.css"
 import Head from "next/head";
-import Banner from "../../components/banner"
+import Banner from "../../components/banner/banner"
+import Navbar from "../../components/nav/navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,19 +12,19 @@ export default function Home() {
       <Head>
         <title>Netflix</title>
       </Head>
-      <h1>Netflix</h1>
-
+      
+      <Navbar username="user@23"/>
       <Banner 
       title="Spiderman: No Way Home"
       subTitle="A bad movie"
       imgUrl="/static/spiderman.jpg"
       />
-{/* 
 
-      <NavBar/>
 
       
-      <Card/> */}
+
+      
+      {/* <Card/> */}
 
     </div>
   );
