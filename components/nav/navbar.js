@@ -60,12 +60,12 @@ const Navbar = (props) => {
             <button className={styles.usernameBtn} onClick={handleShowDropdown}>
               <p className={styles.username}>{username}</p>
               {/** Expand more icon */}
-              {/* <Image
+              <Image
                 src={"/static/expand_more.svg"}
                 alt="Expand dropdown"
-                width="24px"
-                height="24px"
-              /> */}
+                width={24}
+                height={24}
+              />
             </button>
 
               

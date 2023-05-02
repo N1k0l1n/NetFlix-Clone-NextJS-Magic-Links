@@ -3,6 +3,7 @@ import styles from "../styles/Home.module.css"
 import Head from "next/head";
 import Banner from "../../components/banner/banner"
 import Navbar from "../../components/nav/navbar";
+import Card from "../../components/card/card";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,11 +21,9 @@ export default function Home() {
       imgUrl="/static/spiderman.jpg"
       />
 
-
-      
-
-      
-      {/* <Card/> */}
+      <Card imgUrl="/static/spiderman.jpg" size="large"/>
+      <Card imgUrl="/static/spiderman.jpg" size="medium"/>
+      <Card imgUrl="/static/spiderman.jpg" size="small"/>
 
     </div>
   );
