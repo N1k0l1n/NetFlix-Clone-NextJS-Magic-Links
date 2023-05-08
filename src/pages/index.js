@@ -1,39 +1,18 @@
 import { Inter } from "next/font/google";
-import styles from "../styles/Home.module.css"
+import styles from "../styles/Home.module.css";
 import Head from "next/head";
-import Banner from "../../components/banner/banner"
+import Banner from "../../components/banner/banner";
 import Navbar from "../../components/nav/navbar";
 import Card from "../../components/card/card";
-import SectionCards from "../../components/card/section-cards"
+import SectionCards from "../../components/card/section-cards";
+import { getVideos } from "../../lib/videos";
 
 const inter = Inter({ subsets: ["latin"] });
 
-// export async function getServerSideProps(context) {
+export default function Home( ) {
 
-  // const disneyVideos = await getVideos("disney trailer");
-  // const productivityVideos = await getVideos("Productivity");
+  const disneyVideos = getVideos();
 
-  // const travelVideos = await getVideos("indie music");
-
-  // const popularVideos = await getPopularVideos();
-//   return {
-//     props: {
-//       disneyVideos,
-//       travelVideos,
-//       productivityVideos,
-//       popularVideos,
-//       watchItAgainVideos,
-//     },
-//   };
-// }
-
-export default function Home({
-  disneyVideos,
-  travelVideos,
-  productivityVideos,
-  popularVideos,
-  watchItAgainVideos,
-}) {
   return (
     <div className={styles.container}>
       <Head>
@@ -51,19 +30,31 @@ export default function Home({
         />
 
         <div className={styles.sectionWrapper}>
-          <SectionCards title="Disney"  imgUrl="/static/spiderman.jpg" size="large" />
+          <SectionCards
+            title="Disney"
+            size="large"
+            videos={disneyVideos}
+          />
           <SectionCards
             title="Watch it again"
-            imgUrl="/static/spiderman.jpg"
             size="small"
+            videos={disneyVideos}
           />
-          <SectionCards title="Travel"  imgUrl="/static/spiderman.jpg" size="small" />
+          <SectionCards
+            title="Travel"
+            size="small"
+            videos={disneyVideos}
+          />
           <SectionCards
             title="Productivity"
-            imgUrl="/static/spiderman.jpg"
             size="medium"
+            videos={disneyVideos}
           />
-          <SectionCards title="Popular"  imgUrl="/static/spiderman.jpg" size="small" />
+          <SectionCards
+            title="Popular"
+            size="small"
+            videos={disneyVideos}
+          />
         </div>
       </div>
     </div>
