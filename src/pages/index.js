@@ -9,10 +9,12 @@ import { getVideos } from "../../lib/videos";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home( ) {
-
+export async function getServerSideProps() {
   const disneyVideos = getVideos();
+  return { props: { disneyVideos } };
+}
 
+export default function Home({ disneyVideos }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -30,31 +32,19 @@ export default function Home( ) {
         />
 
         <div className={styles.sectionWrapper}>
-          <SectionCards
-            title="Disney"
-            size="large"
-            videos={disneyVideos}
-          />
+          <SectionCards title="Disney" size="large" videos={disneyVideos} />
           <SectionCards
             title="Watch it again"
             size="small"
             videos={disneyVideos}
           />
-          <SectionCards
-            title="Travel"
-            size="small"
-            videos={disneyVideos}
-          />
+          <SectionCards title="Travel" size="small" videos={disneyVideos} />
           <SectionCards
             title="Productivity"
             size="medium"
             videos={disneyVideos}
           />
-          <SectionCards
-            title="Popular"
-            size="small"
-            videos={disneyVideos}
-          />
+          <SectionCards title="Popular" size="small" videos={disneyVideos} />
         </div>
       </div>
     </div>
