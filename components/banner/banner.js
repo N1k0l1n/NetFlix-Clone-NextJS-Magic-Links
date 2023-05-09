@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./banner.module.css";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 const Banner = (props) => {
   const { title, subTitle, imgUrl } = props;
