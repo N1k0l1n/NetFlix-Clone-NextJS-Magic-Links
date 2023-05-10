@@ -1,3 +1,4 @@
+![magic-link-email-authentication](https://github.com/N1k0l1n/netflixjs/assets/97979235/28f44ad4-f782-428d-872e-d5b7196f02ee)
 ![Capture](https://user-images.githubusercontent.com/97979235/236830480-ca0dbbc3-798f-40e9-acb3-4e5b5d51c4aa.JPG)
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
