@@ -1,50 +1,72 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/legacy/image";
-import styles from "./navbar.module.css"
-import { useRouter } from 'next/router';
+import styles from "./navbar.module.css";
+import { useRouter } from "next/router";
+import { magic } from "../../lib/magic-client";
 
-const Navbar = (props) => {
-
+const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
-  //const [username, setUsername] = useState("");
+  const [username, setUsername] = useState("");
   const [didToken, setDidToken] = useState("");
+
   const router = useRouter();
 
-  const handleOnClickHome = (e) =>{
-    e.preventDefault();
-    router.push('/')
-  }
+  useEffect(() => {
+    (async function () {
+      try {
+        const { email, issuer } = await magic.user.getMetadata();
+        const didToken = await magic.user.getIdToken();
+        if (email) {
+          setUsername(email);
+          setDidToken(didToken);
+        }
+      } catch (error) {
+        console.error("Error retrieving email", error);
+      }
+    })();
+  }, []);
 
-  const handleOnClickMyList = (e) =>{
+  const handleOnClickHome = (e) => {
     e.preventDefault();
-    router.push('/browse/my-list')
-  }
+    router.push("/");
+  };
 
-  const handleShowDropdown = (e) =>{
+  const handleOnClickMyList = (e) => {
     e.preventDefault();
-    setShowDropdown(!showDropdown)
-  }
+    router.push("/browse/my-list");
+  };
 
-  const handleSignout = (e) =>{
+  const handleShowDropdown = (e) => {
     e.preventDefault();
-    router.push('/login')
-  }
+    setShowDropdown(!showDropdown);
+  };
 
-  const {username} = props;
+  const handleSignout = async (e) => {
+    e.preventDefault();
+
+    try {
+      await magic.user.logout();
+      console.log(await magic.user.isLoggedIn());
+      router.push("/login")
+    } catch (error) {
+      console.error("Error logging out", error);
+      router.push("/login")
+    }
+  };
 
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <Link className={styles.logoLink} href="/">
-            <div className={styles.logoWrapper}>
-              <Image
-                src="/static/netflix.svg"
-                alt="Netflix logo"
-                width={128}
-                height={34}
-              />
-            </div>
+          <div className={styles.logoWrapper}>
+            <Image
+              src="/static/netflix.svg"
+              alt="Netflix logo"
+              width={128}
+              height={34}
+            />
+          </div>
         </Link>
 
         <ul className={styles.navItems}>
@@ -68,13 +90,10 @@ const Navbar = (props) => {
               />
             </button>
 
-              
             {showDropdown && (
               <div className={styles.navDropdown}>
                 <div>
-                  <a className={styles.linkName} onClick={handleSignout}>
-                    Sign out
-                  </a>
+                    <a className={styles.linkName} onClick={handleSignout}>Sign out</a>
                   <div className={styles.lineWrapper}></div>
                 </div>
               </div>
@@ -83,7 +102,7 @@ const Navbar = (props) => {
         </nav>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

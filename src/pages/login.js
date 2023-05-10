@@ -1,47 +1,64 @@
 import Head from "next/head";
-import React , {useState} from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/legacy/image";
 import styles from "../styles/Login.module.css";
-import { useRouter } from 'next/router';
-import {magic} from '../../lib/magic-client'
-
+import { useRouter } from "next/router";
+import { magic } from "../../lib/magic-client";
 
 const login = () => {
-
-  const [userMsg, setuserMsg] = useState("")
+  const [userMsg, setuserMsg] = useState("");
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
 
-  const handleOnChangeEmail = (e) =>{
-    setuserMsg("")
+  //Impoving Login Experience
+  useEffect(() => {
+    const handleComplete = () => {
+      setIsLoading(false);
+    };
+    router.events.on("routeChangeComplete", handleComplete);
+    router.events.on("routeChangeError", handleComplete);
+    return () => {
+      router.events.off("routeChangeComplete", handleComplete);
+      router.events.off("routeChangeError", handleComplete);
+    };
+  }, [router]);
+
+  const handleOnChangeEmail = (e) => {
+    setuserMsg("");
     console.log("event", e);
     const email = e.target.value;
     setEmail(email);
-  }
+  };
 
-  const handleLoginWithEmail = async(e) =>{
-    if(email){
-      if(email === "nikolinandoni80@gmail.com "){
-
-        try{
+  const handleLoginWithEmail = async (e) => {
+    e.preventDefault();
+    if (email) {
+      if (email === "nikolinandoni80@gmail.com") {
+        try {
+          setIsLoading(true);
           const didToken = await magic.auth.loginWithMagicLink({
             email,
           });
-          console.log({didToken})
-        }catch(error){
+          if (didToken) {
+            router.push("/");
+          }
+        } catch (error) {
           //Handle Error if required
-          console.error("Something went Wrong", error)
+          console.error("Something went Wrong", error);
+          setIsLoading(false);
         }
-        router.push('/')
-      }else{
+      } else {
+        setIsLoading(false);
         setuserMsg("Something went wrong logging in");
       }
-    }else{
-      setuserMsg("Enter a valid email address")
+    } else {
+      setIsLoading(false);
+      setuserMsg("Enter a valid email address");
     }
   };
 
-  
   return (
     <div className={styles.container}>
       <Head>
@@ -75,7 +92,7 @@ const login = () => {
           />
           <p className={styles.userMsg}>{userMsg}</p>
           <button onClick={handleLoginWithEmail} className={styles.loginBtn}>
-            Sign In
+            {isLoading ? "Loading..." : "Sign In"}
           </button>
         </div>
       </main>
@@ -84,4 +101,3 @@ const login = () => {
 };
 
 export default login;
- 

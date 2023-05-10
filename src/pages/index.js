@@ -26,7 +26,7 @@ export default function Home({ disneyVideos, productivityVideos, travelVideos, p
       </Head>
 
       <div className={styles.main}>
-        <Navbar username="nikolinandoni80@gmail.com" />
+        <Navbar username="" />
         <Banner
           videoId="4zH5iYM4wJo"
           title="Spiderman No Way Home"
