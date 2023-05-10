@@ -35,7 +35,7 @@ const login = () => {
   const handleLoginWithEmail = async (e) => {
     e.preventDefault();
     if (email) {
-      if (email === "nikolinandoni80@gmail.com") {
+      if (email === email) {
         try {
           setIsLoading(true);
           const didToken = await magic.auth.loginWithMagicLink({
