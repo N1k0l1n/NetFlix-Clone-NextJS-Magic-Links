@@ -4,21 +4,14 @@ import Modal from "react-modal";
 import styles from '../../styles/Video.module.css'
 import clsx from 'classnames'
 import {getYoutubeVideoById} from "../../../lib/videos"
+import Navbar from "../../../components/nav/navbar";
 
 Modal.setAppElement("#__next");
 
-export async function getStaticProps(){
+export async function getStaticProps(context){
 
     //data to fetch from api
-    // const video = {
-    //     title: 'isdgisrfdgis',
-    //     publishTime : "1990-01-01",
-    //     description: "ghiidrhfgidghighdifhgkidfhgdki",
-    //     channelTitle: "ihgishgfisdhf",
-    //     viewCount: 331361,
-    //   }
-
-    const videoId ='qcxr2xuVLUs'
+     const videoId = context.params.videoId;
 
     const videoArray = await getYoutubeVideoById(videoId);
 
@@ -43,10 +36,11 @@ export async function getStaticPaths() {
 const Video = ({video}) => {
   const router = useRouter();
   
-  const {title, publishTime, description, channelTitle, statistics: {viewCount}} = video;
+  const {title, publishTime, description, channelTitle, statistics: { viewCount } = { viewCount: 0 }, } = video;
 
   return (
     <div className={styles.container}>
+        <Navbar/>
         <Modal
           isOpen={true}
           contentLabel="Watch the video"
